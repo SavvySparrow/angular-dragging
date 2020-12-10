@@ -1,7 +1,8 @@
 import { DOCUMENT } from "@angular/common";
 import {
   AfterViewInit,
-  Directive,
+ContentChild,
+    Directive,
   ElementRef,
   Inject,
   OnDestroy,
@@ -9,6 +10,7 @@ import {
 } from "@angular/core";
 import { fromEvent, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { DraggingHandleDirective } from "./drag-handle.directive";
 import { DraggingService } from "./dragging.service";
 
 @Directive({ selector: "[savDrag]" })
@@ -17,22 +19,29 @@ export class AngularDraggingDirective
   private element: HTMLElement;
 
   private subscriptions: Subscription[] = [];
+
+  @ContentChild(DraggingHandleDirective) handleElementRef: DraggingHandleDirective;
+  handleElement: HTMLElement;
+
   constructor(
     private elementRef: ElementRef<HTMLElement>,
     @Inject(DOCUMENT) private document: any,
     private service: DraggingService
   ) {}
-  ngAfterViewInit(): void {}
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.element = this.elementRef.nativeElement as HTMLElement;
+    this.handleElement = this.handleElementRef?.elementRef.nativeElement as HTMLElement || this.element;
     this.initDrag();
+  }
+  ngOnInit(): void {
+    
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   initDrag() {
-    const dragStart$ = fromEvent<MouseEvent>(this.element, "mousedown");
+    const dragStart$ = fromEvent<MouseEvent>(this.handleElement, "mousedown");
     const dragEnd$ = fromEvent<MouseEvent>(this.document, "mouseup");
     const drag$ = fromEvent<MouseEvent>(this.document, "mousemove").pipe(
       takeUntil(dragEnd$)
