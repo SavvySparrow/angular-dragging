@@ -1,10 +1,11 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { AngularDraggingDirective } from "./dragging.directive";
+import { DraggingHandleDirective } from "./drag-handle.directive";
 
 @NgModule({
-  declarations: [AngularDraggingDirective],
+  declarations: [AngularDraggingDirective,DraggingHandleDirective],
   imports: [CommonModule],
-  exports: [AngularDraggingDirective],
+  exports: [AngularDraggingDirective,DraggingHandleDirective],
 })
 export class DraggingModule {}
