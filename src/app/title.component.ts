@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'title',
+  selector: 'sav-title',
   template: `<h1>{{name}}!</h1>`,
   styles: [`h1 { font-family: Lato; }`]
 })

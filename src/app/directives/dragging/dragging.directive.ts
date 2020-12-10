@@ -9,6 +9,7 @@ import {
 } from "@angular/core";
 import { fromEvent, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { DraggingService } from "./dragging.service";
 
 @Directive({ selector: "[savDrag]" })
 export class AngularDraggingDirective
@@ -18,7 +19,8 @@ export class AngularDraggingDirective
   private subscriptions: Subscription[] = [];
   constructor(
     private elementRef: ElementRef<HTMLElement>,
-    @Inject(DOCUMENT) private document: any
+    @Inject(DOCUMENT) private document: any,
+    private service: DraggingService
   ) {}
   ngAfterViewInit(): void {}
   ngOnInit(): void {
@@ -47,21 +49,30 @@ export class AngularDraggingDirective
 
     // 3
     const dragStartSub = dragStart$.subscribe((event: MouseEvent) => {
-      console.log(event.clientX,event.clientY,currentX,currentY);
+      console.log(event.clientX, event.clientY, event.offsetX, event.offsetY);
       initialX = event.clientX - currentX;
       initialY = event.clientY - currentY;
-      console.log('initial-axis',initialX,initialY);
+      console.log("initial-axis", initialX, initialY);
       this.element.classList.add("free-dragging");
 
       // 4
       dragSub = drag$.subscribe((event: MouseEvent) => {
-        event.preventDefault();
+        console.log("current", currentX, currentY);
+        if (currentX >= 0 && currentY >= 0) {
+          event.preventDefault();
 
-        currentX = event.clientX - initialX;
-        currentY = event.clientY - initialY;
-
-        this.element.style.transform =
-          "translate3d(" + currentX + "px, " + currentY + "px, 0)";
+          currentX = event.clientX - initialX;
+          currentY = event.clientY - initialY;
+          if(currentY<0)currentY=0;
+          if(currentX<0)currentX=0;
+          console.log(event.clientX, event.offsetX);
+          this.service.offsetX$.next(event.clientX);
+          this.service.offsetY$.next(event.clientY);
+          this.service.currentX$.next(currentX);
+          this.service.currentY$.next(currentY);
+          this.element.style.transform =
+            "translate3d(" + currentX + "px, " + currentY + "px, 0)";
+        }
       });
     });
 

@@ -1,4 +1,6 @@
-<title name="{{ name }}"></title>
-<p savDrag>
-	Start editing to see some magic happen :)
-</p>
+<sav-title name="{{ name }} X: {{service.currentX$ | async}} | Y: {{service.currentY$ | async}}"></sav-title>
+<div style="height:100vh;width:100hw;background:grey">
+  <div savDrag style="position:relative;height: 100px;width:100px;border-radius:0%;background:yellow;">
+  <div style="position:relative;top:40%;left:0%">({{service.offsetX$ | async }},{{service.offsetY$ | async}})</div>
+  </div>
+</div>
