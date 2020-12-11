@@ -1,4 +1,20 @@
 /* Add application styles & imports to this file! */
 body {
-  margin: 0px 32px !important
+  margin: 0px 32px !important;
+  background: black;
+  color: whitesmoke;
+}
+.drag-boundary {
+  color: black;
+   background: whitesmoke;
+}
+
+.drag-area {
+  border: 1px solid black;
+  position:absolute;
+  height: 100px;
+  width:100px;
+  border-radius:0%;
+  background:yellow;
+  z-index: 100;
 }

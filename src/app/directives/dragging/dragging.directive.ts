@@ -34,7 +34,7 @@ export class AngularDraggingDirective
     @Inject(DOCUMENT) private document: any
   ) {}
   ngAfterViewInit(): void {
-    this.draggingBoundaryElement = (this.document as Document).querySelector("#boundary");
+    this.draggingBoundaryElement = (this.document as Document).querySelector(".drag-boundary");
     this.element = this.elementRef.nativeElement as HTMLElement;
     this.handleElement = this.handleElementRef?.elementRef.nativeElement as HTMLElement || this.element;
     this.initDrag();
@@ -53,7 +53,6 @@ export class AngularDraggingDirective
       takeUntil(dragEnd$)
     );
 
-    //dragStart$.subscribe(x => console.log(x));
     // 2
     let initialX: number,
       initialY: number,

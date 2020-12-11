@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, VERSION } from "@angular/core";
+import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, VERSION } from "@angular/core";
 
 type Square2D = {
   initialLeft: number;
@@ -11,18 +11,21 @@ type Square2D = {
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
-export class AppComponent implements AfterViewChecked,AfterViewInit {
-  name = "Dragging";
+export class AppComponent implements AfterContentInit,AfterViewChecked,AfterViewInit {
+  name = "Dragging"
 
-  sqaure2DArray: Array<Square2D>;
+  sqaure2DArray: Array<Square2D> = new Array();
 
   constructor() {}
+
+  ngAfterContentInit(): void {
+    this.initGenerateSquare2dArray();
+  }
   ngAfterViewChecked(): void {
     //this.sqaure2DArray = this.sqaure2DArray;
   }
 
   ngAfterViewInit(): void {
-    this.initGenerateSquare2dArray();
   }
 
   initGenerateSquare2dArray() {
