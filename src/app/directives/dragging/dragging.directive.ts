@@ -70,15 +70,14 @@ export class AngularDraggingDirective
       this.element.offsetHeight;
       currentX = 0,
       currentY = 0;
-      this.service.currentX$.next(currentX);
-      this.service.currentY$.next(currentY);
-  console.log(currentX,currentY,maxBoundX,maxBoundY)
+      this.service.offset$.next({x: currentX, y: currentY,width: this.element.offsetWidth,height: this.element.offsetHeight});
+  //console.log(currentX,currentY,maxBoundX,maxBoundY)
     // 3
     const dragStartSub = dragStart$.subscribe((event: MouseEvent) => {
-      console.log(event.clientX, event.clientY, event.offsetX, event.offsetY);
+      //console.log(event.clientX, event.clientY, event.offsetX, event.offsetY);
       initialX = event.clientX - currentX
       initialY = event.clientY - currentY;
-      console.log("initial-axis", initialX, initialY);
+      //console.log("initial-axis", initialX, initialY);
       this.element.classList.add("free-dragging");
 
       // 4
@@ -86,14 +85,11 @@ export class AngularDraggingDirective
         event.preventDefault();
           const x = event.clientX - initialX;
           const y = event.clientY - initialY;
-          console.log(event.clientX,event.clientY,x,y, event.offsetX);
+          //console.log(event.clientX,event.clientY,x,y, event.offsetX);
 
           currentX = Math.max(minBoundX, Math.min(x, maxBoundX));
           currentY = Math.max(minBoundY, Math.min(y, maxBoundY));
           this.service.offset$.next({x: currentX, y: currentY,width: this.element.offsetWidth,height: this.element.offsetHeight});
-          this.service.offsetY$.next(event.clientY);
-          this.service.currentX$.next(currentX);
-          this.service.currentY$.next(currentY);
           this.element.style.transform =
             "translate3d(" + currentX + "px, " + currentY + "px, 0)";
       });
