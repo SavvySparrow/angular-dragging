@@ -81,7 +81,7 @@ export class AppComponent
             found = true;
             return false;
           } else {
-            found = false;
+            //found = false;
             return true;
           }
         });
