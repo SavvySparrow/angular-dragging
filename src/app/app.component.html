@@ -1,11 +1,11 @@
 
 <sav-title name="{{ name }}">
-  <button class="refresh">Refresh</button>
+  <button (click)="refresh()" class="refresh">Refresh</button>
 </sav-title>
 
 <div class="drag-boundary" style="height:calc(100vh - 120px);width:calc(100vw - 64px);">
   <ng-container *ngFor="let sqaure of sqaure2DArray">
-    <div class="drag-area" (currentBounds)="updateCurrentBounds(sqaure,$event);" [savDrag]="{minBoundX: sqaure.initialLeft,minBoundY: sqaure.initialTop}">
+    <div class="drag-area" (currentBounds)="updateCurrentBounds(sqaure,$event);" [savDrag]="sqaure">
       <div style="position:absolute;top:-20%;left:-25%">({{ sqaure.currentBounds?.x }}, {{sqaure.currentBounds?.y}})</div>
       <div style="position:absolute;top:-20%;right:-25%">({{ sqaure.currentBounds?.x + sqaure.currentBounds?.width }}, {{sqaure.currentBounds?.y}})</div>
       <div style="position:absolute;bottom:-20%;left:-25%">({{ sqaure.currentBounds?.x }}, {{sqaure.currentBounds?.y + sqaure.currentBounds?.height}})</div>

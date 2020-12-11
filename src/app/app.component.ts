@@ -1,4 +1,12 @@
-import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, VERSION } from "@angular/core";
+import {
+  AfterContentChecked,
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  VERSION
+} from "@angular/core";
+import { AngularDraggingDirective } from "./directives/dragging/dragging.directive";
 
 type Square2D = {
   initialLeft: number;
@@ -11,37 +19,59 @@ type Square2D = {
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
-export class AppComponent implements AfterContentInit,AfterViewChecked,AfterViewInit {
-  name = "Dragging"
+export class AppComponent
+  implements
+    AfterContentInit,
+    AfterContentChecked,
+    AfterViewInit,
+    AfterViewChecked {
+  name = "Dragging";
 
-  sqaure2DArray: Array<Square2D> = new Array();
+  sqaure2DArray: Array<Square2D>;
 
   constructor() {}
+  ngAfterViewChecked(): void {
+    if (!this.sqaure2DArray) {
+      this.initGenerateSquare2dArray();
+    }
+  }
 
   ngAfterContentInit(): void {
-    this.initGenerateSquare2dArray();
+    if (!this.sqaure2DArray) {
+      this.initGenerateSquare2dArray();
+    }
   }
-  ngAfterViewChecked(): void {
-    //this.sqaure2DArray = this.sqaure2DArray;
+  ngAfterContentChecked(): void {
+    if (!this.sqaure2DArray) {
+      this.initGenerateSquare2dArray();
+    }
   }
 
   ngAfterViewInit(): void {
+    if (!this.sqaure2DArray) {
+      this.initGenerateSquare2dArray();
+    }
   }
 
   initGenerateSquare2dArray() {
+    this.sqaure2DArray = [];
     const randomInt = this.getRandomInt(2, 10);
     [...Array(randomInt)].forEach((_, i) => {
-      console.log(i);
-      this.sqaure2DArray.push({initialLeft: this.getRandomLeft(),initialTop: this.getRandomTop(),currentBounds: {}});
+      this.sqaure2DArray.push({
+        initialLeft: this.getRandomLeft(),
+        initialTop: this.getRandomTop(),
+        currentBounds: {}
+      });
     });
+    console.log(this.sqaure2DArray.length, this.sqaure2DArray);
   }
 
   getRandomLeft(): number {
-    return this.getRandomInt(0,1444);
+    return this.getRandomInt(0, 1444);
   }
 
   getRandomTop(): number {
-    return this.getRandomInt(0,553);;
+    return this.getRandomInt(0, 553);
   }
 
   getRandomInt(min, max) {
@@ -52,5 +82,10 @@ export class AppComponent implements AfterContentInit,AfterViewChecked,AfterView
 
   updateCurrentBounds(sqaure2D, cord) {
     sqaure2D.currentBounds = cord;
+  }
+
+  refresh() {
+    AngularDraggingDirective.destroyCount = 0;
+    this.initGenerateSquare2dArray();
   }
 }

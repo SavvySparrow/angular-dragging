@@ -1,5 +1,6 @@
 import { DOCUMENT } from "@angular/common";
 import {
+AfterViewChecked,
   AfterViewInit,
 ContentChild,
     Directive,
@@ -19,11 +20,13 @@ import { DraggingHandleDirective } from "./drag-handle.directive";
 export class AngularDraggingDirective
   implements OnInit, AfterViewInit, OnDestroy {
 
+  static destroyCount: number = 0;
+
   @Input('savDrag') bound: any;
   @Output('currentBounds') currentBounds: EventEmitter<any> = new EventEmitter();
   private element: HTMLElement;
 
-  private subscriptions: Subscription[] = [];
+  private subscriptions: Subscription[] = []
 
   @ContentChild(DraggingHandleDirective) handleElementRef: DraggingHandleDirective;
   handleElement: HTMLElement;
@@ -33,6 +36,7 @@ export class AngularDraggingDirective
     private elementRef: ElementRef<HTMLElement>,
     @Inject(DOCUMENT) private document: any
   ) {}
+
   ngAfterViewInit(): void {
     this.draggingBoundaryElement = (this.document as Document).querySelector(".drag-boundary");
     this.element = this.elementRef.nativeElement as HTMLElement;
@@ -43,7 +47,10 @@ export class AngularDraggingDirective
     
   }
   ngOnDestroy(): void {
-    this.subscriptions.forEach(s => s.unsubscribe());
+    console.log(`Destroyed: (${this.bound.initialLeft},${this.bound.initialTop})`,++AngularDraggingDirective.destroyCount);
+    this.subscriptions.forEach(s => {
+      if(s) s.unsubscribe();
+    });
   }
 
   initDrag() {
@@ -71,8 +78,8 @@ export class AngularDraggingDirective
       minBoundY +
       this.draggingBoundaryElement.offsetHeight -
       this.element.offsetHeight;
-      currentX = Math.max(minBoundX, Math.min(this.bound?this.bound.minBoundX:0, maxBoundX));
-      currentY = Math.max(minBoundY, Math.min(this.bound?this.bound.minBoundY:0, maxBoundY));
+      currentX = Math.max(minBoundX, Math.min(this.bound?this.bound.initialLeft:0, maxBoundX));
+      currentY = Math.max(minBoundY, Math.min(this.bound?this.bound.initialTop:0, maxBoundY));
       this.generateNewBounds(currentX,currentY);
       
       //console.log(this.bound,currentX,currentY,maxBoundX,maxBoundY)
