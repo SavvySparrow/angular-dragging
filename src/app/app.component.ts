@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, VERSION } from "@angular/core";
+import { AfterViewChecked, AfterViewInit, Component, VERSION } from "@angular/core";
 
 type Square2D = {
   initialLeft: number;
@@ -11,28 +11,15 @@ type Square2D = {
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewChecked,AfterViewInit {
   name = "Dragging";
 
-  sqaure2DArray: Array<Square2D> = [
-    {
-      initialLeft: 0,
-      initialTop: 0,
-      currentBounds: {}
-    },
-    {
-      initialLeft: 500,
-      initialTop: 0,
-      currentBounds: {}
-    },
-    {
-      initialLeft: 300,
-      initialTop: 0,
-      currentBounds: {}
-    }
-  ];
+  sqaure2DArray: Array<Square2D>;
 
   constructor() {}
+  ngAfterViewChecked(): void {
+    //this.sqaure2DArray = this.sqaure2DArray;
+  }
 
   ngAfterViewInit(): void {
     this.initGenerateSquare2dArray();
@@ -47,11 +34,11 @@ export class AppComponent implements AfterViewInit {
   }
 
   getRandomLeft(): number {
-    return this.getRandomInt(0,1000);
+    return this.getRandomInt(0,1444);
   }
 
   getRandomTop(): number {
-    return this.getRandomInt(0,500);;
+    return this.getRandomInt(0,553);;
   }
 
   getRandomInt(min, max) {
