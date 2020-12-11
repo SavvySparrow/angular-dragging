@@ -55,29 +55,29 @@ export class AppComponent
   }
 
   getRandomLeft(): number {
-    let found: boolean = false;
-    let cord: number = this.getRandomInt(0, 1444);
-    let i = 0;
-    while (!found && i < 10) {
-      console.log(cord);
-      if (this.sqaure2DArray.length == 0) {
-        found = true;
-      } else {
-        // this.sqaure2DArray.every(item => {
-        //   cord = this.getRandomInt(0, 1444);
-        //   console.log(cord);
-        //   if (cord > item.initialLeft + 100) {
-        //     found = true;
-        //     return false;
-        //   } else {
-        //     return true;
-        //   }
-        // });
-      }
-      i++;
-    }
-    return cord;
-    //return this.getRandomInt(0, 1444);
+    // let found: boolean = false;
+    // let cord: number = this.getRandomInt(0, 1444);
+    // let i = 0;
+    // while (!found && i < 10) {
+    //   console.log(cord);
+    //   if (this.sqaure2DArray.length == 0) {
+    //     found = true;
+    //   } else {
+    //     // this.sqaure2DArray.every(item => {
+    //     //   cord = this.getRandomInt(0, 1444);
+    //     //   console.log(cord);
+    //     //   if (cord > item.initialLeft + 100) {
+    //     //     found = true;
+    //     //     return false;
+    //     //   } else {
+    //     //     return true;
+    //     //   }
+    //     // });
+    //   }
+    //   i++;
+    // }
+    // return cord;
+    return this.getRandomInt(0, 1444);
   }
 
   getRandomTop(): number {
