@@ -11,3 +11,16 @@ p {
   width: 24px;
   height: 24px;
 }
+
+.refresh {
+  background:transparent;
+  color: whitesmoke;
+  border: 1px solid whitesmoke;
+  padding: 5px;
+}
+
+.refresh:hover {
+  cursor: pointer;
+  background: whitesmoke;
+  color: black;
+}
