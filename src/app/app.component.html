@@ -1,38 +1,21 @@
 
 <sav-title name="{{ name }}"></sav-title>
 <div id="boundary" style="height:calc(100vh - 120px);width:calc(100vw - 64px);background:grey">
-  <div [savDrag]="{minBoundX: 0,minBoundY: 0}" style="position:absolute;height: 100px;width:100px;border-radius:0%;background:yellow;">
-    <ng-container *ngIf="service.offset$ | async as offset">
-      <div style="position:absolute;top:-20%;left:-25%">({{ offset.x }}, {{offset.y}})</div>
-      <div style="position:absolute;top:-20%;right:-25%">({{ offset?.x + offset.width }}, {{offset?.y}})</div>
-      <div style="position:absolute;bottom:-20%;left:-25%">({{ offset?.x }}, {{offset?.y + offset?.height}})</div>
-      <div style="position:absolute;bottom:-20%;right:-25%">({{ offset?.x + offset?.width }}, {{offset?.y + offset?.height}})</div>
-    </ng-container>
-  
-    <div class="drag-handle" savDragHandle>
-      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-        <path
-          d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
-        ></path>
-        <path d="M0 0h24v24H0z" fill="none"></path>
-      </svg>
+  <ng-container *ngFor="let sqaure of sqaure2DArray">
+    <div (currentBounds)="updateCurrentBounds(sqaure,$event);" [savDrag]="{minBoundX: sqaure.initialLeft,minBoundY: sqaure.initialTop}" style="position:absolute;height: 100px;width:100px;border-radius:0%;background:yellow;">
+      <div style="position:absolute;top:-20%;left:-25%">({{ sqaure.currentBounds?.x }}, {{sqaure.currentBounds?.y}})</div>
+      <div style="position:absolute;top:-20%;right:-25%">({{ sqaure.currentBounds?.x + sqaure.currentBounds?.width }}, {{sqaure.currentBounds?.y}})</div>
+      <div style="position:absolute;bottom:-20%;left:-25%">({{ sqaure.currentBounds?.x }}, {{sqaure.currentBounds?.y + sqaure.currentBounds?.height}})</div>
+      <div style="position:absolute;bottom:-20%;right:-25%">({{ sqaure.currentBounds?.x + sqaure.currentBounds?.width }}, {{sqaure.currentBounds?.y + sqaure.currentBounds?.height}})</div>
+    
+      <div class="drag-handle" savDragHandle>
+        <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+          <path
+            d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
+          ></path>
+          <path d="M0 0h24v24H0z" fill="none"></path>
+        </svg>
+      </div>
     </div>
-  </div>
-  <div [savDrag]="{minBoundX: 600,minBoundY: 0}" style="position:absolute;height: 100px;width:100px;border-radius:0%;background:yellow;">
-    <ng-container *ngIf="service.offset$ | async as offset">
-      <div style="position:absolute;top:-20%;left:-25%">({{ offset.x }}, {{offset.y}})</div>
-      <div style="position:absolute;top:-20%;right:-25%">({{ offset.x + offset.width }}, {{offset.y}})</div>
-      <div style="position:absolute;bottom:-20%;left:-25%">({{ offset.x }}, {{offset.y + offset.height}})</div>
-      <div style="position:absolute;bottom:-20%;right:-25%">({{ offset.x + offset.width }}, {{offset.y + offset.height}})</div>
-    </ng-container>
-  
-    <div class="drag-handle" savDragHandle>
-      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-        <path
-          d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
-        ></path>
-        <path d="M0 0h24v24H0z" fill="none"></path>
-      </svg>
-    </div>
-  </div>
+  </ng-container>
 </div>
