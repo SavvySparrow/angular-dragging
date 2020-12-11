@@ -5,8 +5,10 @@ ContentChild,
     Directive,
   ElementRef,
   Inject,
-  OnDestroy,
-  OnInit
+Input,
+    OnDestroy,
+  OnInit,
+Output
 } from "@angular/core";
 import { fromEvent, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -16,6 +18,9 @@ import { DraggingService } from "./dragging.service";
 @Directive({ selector: "[savDrag]" })
 export class AngularDraggingDirective
   implements OnInit, AfterViewInit, OnDestroy {
+
+  @Input('savDrag') bound: any;
+  @Output('currentBounds') currentBounds: any;
   private element: HTMLElement;
 
   private subscriptions: Subscription[] = [];
@@ -68,10 +73,13 @@ export class AngularDraggingDirective
       minBoundY +
       this.draggingBoundaryElement.offsetHeight -
       this.element.offsetHeight;
-      currentX = 0,
-      currentY = 0;
+      currentX = Math.max(minBoundX, Math.min(this.bound?this.bound.minBoundX:0, maxBoundX));
+      currentY = Math.max(minBoundY, Math.min(this.bound?this.bound.minBoundY:0, maxBoundY));
+      this.element.style.transform =
+        "translate3d(" + currentX + "px, " + currentY + "px, 0)";
       this.service.offset$.next({x: currentX, y: currentY,width: this.element.offsetWidth,height: this.element.offsetHeight});
-  //console.log(currentX,currentY,maxBoundX,maxBoundY)
+      
+      console.log(this.bound,currentX,currentY,maxBoundX,maxBoundY)
     // 3
     const dragStartSub = dragStart$.subscribe((event: MouseEvent) => {
       //console.log(event.clientX, event.clientY, event.offsetX, event.offsetY);

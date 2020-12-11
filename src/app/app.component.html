@@ -1,14 +1,12 @@
 
-<ng-container *ngIf="service.offset$ | async as offset">
-<sav-title name="{{ name }} X: {{offset.x}} | Y: {{offset.y}}"></sav-title>
-</ng-container>
-<div id="boundary" style="height:200px;width:400px;background:grey">
-  <div savDrag style="position:relative;height: 100px;width:100px;border-radius:0%;background:yellow;">
+<sav-title name="{{ name }}"></sav-title>
+<div id="boundary" style="height:calc(100vh - 120px);width:calc(100vw - 64px);background:grey">
+  <div [savDrag]="{minBoundX: 0,minBoundY: 0}" style="position:absolute;height: 100px;width:100px;border-radius:0%;background:yellow;">
     <ng-container *ngIf="service.offset$ | async as offset">
       <div style="position:absolute;top:-20%;left:-25%">({{ offset.x }}, {{offset.y}})</div>
-      <div style="position:absolute;top:-20%;right:-25%">({{ offset.x + offset.width }}, {{offset.y}})</div>
-      <div style="position:absolute;bottom:-20%;left:-25%">({{ offset.x }}, {{offset.y + offset.height}})</div>
-      <div style="position:absolute;bottom:-20%;right:-25%">({{ offset.x + offset.width }}, {{offset.y + offset.height}})</div>
+      <div style="position:absolute;top:-20%;right:-25%">({{ offset?.x + offset.width }}, {{offset?.y}})</div>
+      <div style="position:absolute;bottom:-20%;left:-25%">({{ offset?.x }}, {{offset?.y + offset?.height}})</div>
+      <div style="position:absolute;bottom:-20%;right:-25%">({{ offset?.x + offset?.width }}, {{offset?.y + offset?.height}})</div>
     </ng-container>
   
     <div class="drag-handle" savDragHandle>
@@ -20,7 +18,7 @@
       </svg>
     </div>
   </div>
-  <div savDrag style="left:200px;position:relative;height: 100px;width:100px;border-radius:0%;background:yellow;">
+  <div [savDrag]="{minBoundX: 600,minBoundY: 0}" style="position:absolute;height: 100px;width:100px;border-radius:0%;background:yellow;">
     <ng-container *ngIf="service.offset$ | async as offset">
       <div style="position:absolute;top:-20%;left:-25%">({{ offset.x }}, {{offset.y}})</div>
       <div style="position:absolute;top:-20%;right:-25%">({{ offset.x + offset.width }}, {{offset.y}})</div>
