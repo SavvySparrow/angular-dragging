@@ -31,15 +31,11 @@ export class AppComponent
 
   constructor() {}
   ngAfterViewChecked(): void {
-    if (!this.sqaure2DArray) {
-      this.initGenerateSquare2dArray();
-    }
+    
   }
 
   ngAfterContentInit(): void {
-    if (!this.sqaure2DArray) {
-      this.initGenerateSquare2dArray();
-    }
+    
   }
   ngAfterContentChecked(): void {
     if (!this.sqaure2DArray) {
@@ -48,9 +44,7 @@ export class AppComponent
   }
 
   ngAfterViewInit(): void {
-    if (!this.sqaure2DArray) {
-      this.initGenerateSquare2dArray();
-    }
+    
   }
 
   initGenerateSquare2dArray() {
@@ -86,6 +80,6 @@ export class AppComponent
 
   refresh() {
     AngularDraggingDirective.destroyCount = 0;
-    this.initGenerateSquare2dArray();
+    this.sqaure2DArray = undefined;
   }
 }

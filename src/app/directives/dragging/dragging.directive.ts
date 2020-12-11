@@ -47,7 +47,7 @@ export class AngularDraggingDirective
     
   }
   ngOnDestroy(): void {
-    console.log(`Destroyed: (${this.bound.initialLeft},${this.bound.initialTop})`,++AngularDraggingDirective.destroyCount);
+    //console.log(`Destroyed: (${this.bound.initialLeft},${this.bound.initialTop})`,++AngularDraggingDirective.destroyCount);
     this.subscriptions.forEach(s => {
       if(s) s.unsubscribe();
     });
@@ -128,6 +128,9 @@ export class AngularDraggingDirective
   generateNewBounds(currentX,currentY) {
     this.element.style.transform =
         "translate3d(" + currentX + "px, " + currentY + "px, 0)";
-    this.currentBounds.emit({x: currentX, y: currentY,width: this.element.offsetWidth,height: this.element.offsetHeight});
+    setTimeout(() => {
+      this.currentBounds.emit({x: currentX, y: currentY,width: this.element.offsetWidth,height: this.element.offsetHeight});
+    },0)
+    
   }
 }
