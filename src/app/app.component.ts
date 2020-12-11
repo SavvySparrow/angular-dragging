@@ -4,7 +4,9 @@ import {
   AfterViewChecked,
   AfterViewInit,
   Component,
-  VERSION
+ElementRef,
+    VERSION,
+ViewChild
 } from "@angular/core";
 import { AngularDraggingDirective } from "./directives/dragging/dragging.directive";
 
@@ -29,8 +31,14 @@ export class AppComponent
 
   sqaure2DArray: Array<Square2D>;
 
+  @ViewChild('boundary',{read: ElementRef,static: true}) boundaryRef: ElementRef;
+
   constructor() {}
-  ngAfterViewChecked(): void {}
+  ngAfterViewChecked(): void {
+    // if (!this.sqaure2DArray) {
+    //   this.initGenerateSquare2dArray();
+    // }
+  }
 
   ngAfterContentInit(): void {}
   ngAfterContentChecked(): void {
@@ -39,7 +47,8 @@ export class AppComponent
     }
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+  }
 
   initGenerateSquare2dArray() {
     this.sqaure2DArray = [];
@@ -58,15 +67,15 @@ export class AppComponent
     let found: boolean = false;
     let cord: number = this.getRandomInt(0, 1444);
     let i = 0;
-    while (!found && i < 10) {
+    while (!found) {
       if (this.sqaure2DArray.length == 0) {
-        console.log("First",i,cord);
+        console.log("First",i,cord,(this.boundaryRef.nativeElement as HTMLElement).offsetWidth - 102);
         found = true;
       } else {
         this.sqaure2DArray.every((item,index) => {
           cord = this.getRandomInt(0, 1444);
-          console.log(i,cord);
           if (cord > item.initialLeft + 100) {
+            console.log("Rest",cord);
             found = true;
             return false;
           } else {

@@ -3,7 +3,7 @@
   <button (click)="refresh()" class="refresh">Refresh</button>
 </sav-title>
 
-<div class="drag-boundary" style="height:calc(100vh - 120px);width:calc(100vw - 64px);">
+<div #boundary class="drag-boundary" style="height:calc(100vh - 120px);width:calc(100vw - 64px);">
   <ng-container *ngFor="let sqaure of sqaure2DArray">
     <div class="drag-area" (currentBounds)="updateCurrentBounds(sqaure,$event);" [savDrag]="sqaure">
       <div style="position:absolute;top:-20%;left:-25%">({{ sqaure.currentBounds?.x }}, {{sqaure.currentBounds?.y}})</div>
