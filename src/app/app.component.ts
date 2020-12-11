@@ -65,17 +65,20 @@ export class AppComponent
     let cord:number;
     while(!found) {
       console.log(cord);
-      this.sqaure2DArray.every((item) => {
-        cord = this.getRandomInt(0, 1444);
-        console.log(cord);
-        if(cord > (item.initialLeft + 100)) {
-          found = true;
-          return false;
-        } else {
-          return true;
-        }
-      })
-      found = true;
+      if(this.sqaure2DArray.length==0) {
+        found = true;
+      } else {
+        this.sqaure2DArray.every((item) => {
+          cord = this.getRandomInt(0, 1444);
+          console.log(cord);
+          if(cord > (item.initialLeft + 100)) {
+            found = true;
+            return false;
+          } else {
+            return true;
+          }
+        })
+      }
     }
     if(found) return cord;
     //return this.getRandomInt(0, 1444);
