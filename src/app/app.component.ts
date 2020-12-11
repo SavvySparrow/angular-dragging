@@ -30,22 +30,16 @@ export class AppComponent
   sqaure2DArray: Array<Square2D>;
 
   constructor() {}
-  ngAfterViewChecked(): void {
-    
-  }
+  ngAfterViewChecked(): void {}
 
-  ngAfterContentInit(): void {
-    
-  }
+  ngAfterContentInit(): void {}
   ngAfterContentChecked(): void {
     if (!this.sqaure2DArray) {
       this.initGenerateSquare2dArray();
     }
   }
 
-  ngAfterViewInit(): void {
-    
-  }
+  ngAfterViewInit(): void {}
 
   initGenerateSquare2dArray() {
     this.sqaure2DArray = [];
@@ -61,28 +55,28 @@ export class AppComponent
   }
 
   getRandomLeft(): number {
-    let found:boolean = false;
-    let cord:number = this.getRandomInt(0, 1444);
+    let found: boolean = false;
+    let cord: number = this.getRandomInt(0, 1444);
     let i = 0;
-    while(!found || i< 10) {
+    while (!found && i < 10) {
       console.log(cord);
-      if(this.sqaure2DArray.length==0) {
+      if (this.sqaure2DArray.length == 0) {
         found = true;
       } else {
-        this.sqaure2DArray.every((item) => {
+        this.sqaure2DArray.every(item => {
           cord = this.getRandomInt(0, 1444);
           console.log(cord);
-          if(cord > (item.initialLeft + 100)) {
+          if (cord > item.initialLeft + 100) {
             found = true;
             return false;
           } else {
             return true;
           }
-        })
+        });
       }
       i++;
     }
-    if(found) return cord;
+    if (found) return cord;
     //return this.getRandomInt(0, 1444);
   }
 
