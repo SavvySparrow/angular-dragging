@@ -66,7 +66,7 @@ export class AppComponent
   getRandomLeft(): number {
     let found: boolean = false;
     let maxBound = (this.boundaryRef.nativeElement as HTMLElement).offsetWidth - 102;
-    maxBound = 1444;
+    //maxBound = 1444;
     let cord: number = this.getRandomInt(0, maxBound);
     let i = 0;
     while (!found) {
@@ -81,6 +81,7 @@ export class AppComponent
             found = true;
             return false;
           } else {
+            found = false;
             return true;
           }
         });
