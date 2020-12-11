@@ -62,8 +62,9 @@ export class AppComponent
 
   getRandomLeft(): number {
     let found:boolean = false;
-    let cord:number;
-    while(!found) {
+    let cord:number = this.getRandomInt(0, 1444);
+    let i = 0;
+    while(!found || i< 10) {
       console.log(cord);
       if(this.sqaure2DArray.length==0) {
         found = true;
@@ -79,6 +80,7 @@ export class AppComponent
           }
         })
       }
+      i++;
     }
     if(found) return cord;
     //return this.getRandomInt(0, 1444);
