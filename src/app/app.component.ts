@@ -65,15 +65,17 @@ export class AppComponent
 
   getRandomLeft(): number {
     let found: boolean = false;
-    let cord: number = this.getRandomInt(0, 1444);
+    let maxBound = (this.boundaryRef.nativeElement as HTMLElement).offsetWidth - 102;
+    maxBound = 1444;
+    let cord: number = this.getRandomInt(0, maxBound);
     let i = 0;
     while (!found) {
       if (this.sqaure2DArray.length == 0) {
-        console.log("First",i,cord,(this.boundaryRef.nativeElement as HTMLElement).offsetWidth - 102);
+        console.log("First",i,cord,maxBound);
         found = true;
       } else {
         this.sqaure2DArray.every((item,index) => {
-          cord = this.getRandomInt(0, 1444);
+          cord = this.getRandomInt(0, maxBound);
           if (cord > item.initialLeft + 100) {
             console.log("Rest",cord);
             found = true;
@@ -85,8 +87,9 @@ export class AppComponent
       }
       i++;
     }
+    console.log(found);
     // return cord;
-    return this.getRandomInt(0, 1444);
+    return this.getRandomInt(0, maxBound);
   }
 
   getRandomTop(): number {
