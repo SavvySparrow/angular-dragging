@@ -59,20 +59,20 @@ export class AppComponent
     let cord: number = this.getRandomInt(0, 1444);
     let i = 0;
     while (!found && i < 10) {
-      console.log(cord);
       if (this.sqaure2DArray.length == 0) {
+        console.log("First",i,cord);
         found = true;
       } else {
-        // this.sqaure2DArray.every(item => {
-        //   cord = this.getRandomInt(0, 1444);
-        //   console.log(cord);
-        //   if (cord > item.initialLeft + 100) {
-        //     found = true;
-        //     return false;
-        //   } else {
-        //     return true;
-        //   }
-        // });
+        this.sqaure2DArray.every((item,index) => {
+          cord = this.getRandomInt(0, 1444);
+          console.log(i,cord);
+          if (cord > item.initialLeft + 100) {
+            found = true;
+            return false;
+          } else {
+            return true;
+          }
+        });
       }
       i++;
     }
