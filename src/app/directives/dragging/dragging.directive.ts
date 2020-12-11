@@ -73,9 +73,7 @@ export class AngularDraggingDirective
       this.element.offsetHeight;
       currentX = Math.max(minBoundX, Math.min(this.bound?this.bound.minBoundX:0, maxBoundX));
       currentY = Math.max(minBoundY, Math.min(this.bound?this.bound.minBoundY:0, maxBoundY));
-      this.element.style.transform =
-        "translate3d(" + currentX + "px, " + currentY + "px, 0)";
-      this.currentBounds.emit({x: currentX, y: currentY,width: this.element.offsetWidth,height: this.element.offsetHeight});
+      this.generateNewBounds(currentX,currentY);
       
       //console.log(this.bound,currentX,currentY,maxBoundX,maxBoundY)
     // 3
@@ -118,5 +116,11 @@ export class AngularDraggingDirective
       dragSub,
       dragEndSub
     ]);
+  }
+
+  generateNewBounds(currentX,currentY) {
+    this.element.style.transform =
+        "translate3d(" + currentX + "px, " + currentY + "px, 0)";
+    this.currentBounds.emit({x: currentX, y: currentY,width: this.element.offsetWidth,height: this.element.offsetHeight});
   }
 }
