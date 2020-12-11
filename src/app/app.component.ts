@@ -87,9 +87,9 @@ export class AppComponent
       }
       i++;
     }
-    console.log(found);
-    // return cord;
-    return this.getRandomInt(0, maxBound);
+    console.log(found,cord);
+    if(found) return cord;
+    else return this.getRandomInt(0, maxBound);
   }
 
   getRandomTop(): number {
