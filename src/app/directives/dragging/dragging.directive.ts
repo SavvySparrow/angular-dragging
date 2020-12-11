@@ -22,6 +22,7 @@ export class AngularDraggingDirective
 
   @ContentChild(DraggingHandleDirective) handleElementRef: DraggingHandleDirective;
   handleElement: HTMLElement;
+  draggingBoundaryElement: HTMLElement;
 
   constructor(
     private elementRef: ElementRef<HTMLElement>,
@@ -29,6 +30,7 @@ export class AngularDraggingDirective
     private service: DraggingService
   ) {}
   ngAfterViewInit(): void {
+    this.draggingBoundaryElement = (this.document as Document).querySelector("#boundary");
     this.element = this.elementRef.nativeElement as HTMLElement;
     this.handleElement = this.handleElementRef?.elementRef.nativeElement as HTMLElement || this.element;
     this.initDrag();
@@ -56,32 +58,44 @@ export class AngularDraggingDirective
 
     let dragSub: Subscription;
 
+    const minBoundX = currentX;
+    const minBoundY = currentY;
+    const maxBoundX =
+      minBoundX +
+      this.draggingBoundaryElement.offsetWidth -
+      this.element.offsetWidth;
+    const maxBoundY =
+      minBoundY +
+      this.draggingBoundaryElement.offsetHeight -
+      this.element.offsetHeight;
+      currentX = 0,
+      currentY = 0;
+      this.service.currentX$.next(currentX);
+      this.service.currentY$.next(currentY);
+  console.log(currentX,currentY,maxBoundX,maxBoundY)
     // 3
     const dragStartSub = dragStart$.subscribe((event: MouseEvent) => {
       console.log(event.clientX, event.clientY, event.offsetX, event.offsetY);
-      initialX = event.clientX - currentX;
+      initialX = event.clientX - currentX
       initialY = event.clientY - currentY;
       console.log("initial-axis", initialX, initialY);
       this.element.classList.add("free-dragging");
 
       // 4
       dragSub = drag$.subscribe((event: MouseEvent) => {
-        console.log("current", currentX, currentY);
-        if (currentX >= 0 && currentY >= 0) {
-          event.preventDefault();
+        event.preventDefault();
+          const x = event.clientX - initialX;
+          const y = event.clientY - initialY;
+          console.log(event.clientX,event.clientY,x,y, event.offsetX);
 
-          currentX = event.clientX - initialX;
-          currentY = event.clientY - initialY;
-          if(currentY<0)currentY=0;
-          if(currentX<0)currentX=0;
-          console.log(event.clientX, event.offsetX);
-          this.service.offsetX$.next(event.clientX);
+          currentX = Math.max(minBoundX, Math.min(x, maxBoundX));
+          currentY = Math.max(minBoundY, Math.min(y, maxBoundY));
+          this.service.offset$.next({x: currentX, y: currentY,width: this.element.offsetWidth,height: this.element.offsetHeight});
           this.service.offsetY$.next(event.clientY);
           this.service.currentX$.next(currentX);
           this.service.currentY$.next(currentY);
           this.element.style.transform =
             "translate3d(" + currentX + "px, " + currentY + "px, 0)";
-        }
       });
     });
 
@@ -93,6 +107,7 @@ export class AngularDraggingDirective
       if (dragSub) {
         dragSub.unsubscribe();
       }
+      
     });
 
     // 6
