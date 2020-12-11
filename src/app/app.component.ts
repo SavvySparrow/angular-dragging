@@ -76,7 +76,7 @@ export class AppComponent
       }
       i++;
     }
-    if (found) return cord;
+    return cord;
     //return this.getRandomInt(0, 1444);
   }
 
