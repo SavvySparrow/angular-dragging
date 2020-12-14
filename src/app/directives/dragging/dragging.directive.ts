@@ -8,7 +8,8 @@ ContentChild,
 EventEmitter,
     Inject,
 Input,
-    OnDestroy,
+NgZone,
+        OnDestroy,
   OnInit,
 Output
 } from "@angular/core";
@@ -34,7 +35,8 @@ export class AngularDraggingDirective
 
   constructor(
     private elementRef: ElementRef<HTMLElement>,
-    @Inject(DOCUMENT) private document: any
+    @Inject(DOCUMENT) private document: any,
+    private ngZone: NgZone
   ) {}
 
   ngAfterViewInit(): void {
@@ -128,9 +130,12 @@ export class AngularDraggingDirective
   generateNewBounds(currentX,currentY) {
     this.element.style.transform =
         "translate3d(" + currentX + "px, " + currentY + "px, 0)";
-    setTimeout(() => {
+    this.ngZone.runOutsideAngular(() => {
       this.currentBounds.emit({x: currentX, y: currentY,width: this.element.offsetWidth,height: this.element.offsetHeight});
-    },0)
+    });
+    // setTimeout(() => {
+      
+    // },0)
     
   }
 }
