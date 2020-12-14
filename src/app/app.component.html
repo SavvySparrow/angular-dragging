@@ -4,8 +4,9 @@
 </sav-title>
 
 <div #boundary class="drag-boundary" style="height:calc(100vh - 120px);width:calc(100vw - 64px);">
-  <ng-container *ngFor="let sqaure of sqaure2DArray">
+  <ng-container *ngFor="let sqaure of sqaure2DArray; let i=index">
     <div class="drag-area" (currentBounds)="updateCurrentBounds(sqaure,$event);" [savDrag]="sqaure">
+      {{ i }}
       <div style="position:absolute;top:-20%;left:-25%">({{ sqaure.currentBounds?.x }}, {{sqaure.currentBounds?.y}})</div>
       <div style="position:absolute;top:-20%;right:-25%">({{ sqaure.currentBounds?.x + sqaure.currentBounds?.width }}, {{sqaure.currentBounds?.y}})</div>
       <div style="position:absolute;bottom:-20%;left:-25%">({{ sqaure.currentBounds?.x }}, {{sqaure.currentBounds?.y + sqaure.currentBounds?.height}})</div>

@@ -40,13 +40,14 @@ export class AngularDraggingDirective
   ) {}
 
   ngAfterViewInit(): void {
+    //console.log('child view init')
     this.draggingBoundaryElement = (this.document as Document).querySelector(".drag-boundary");
     this.element = this.elementRef.nativeElement as HTMLElement;
     this.handleElement = this.handleElementRef?.elementRef.nativeElement as HTMLElement || this.element;
     this.initDrag();
   }
-  ngOnInit(): void {
-    
+   ngOnInit(): void {
+    //console.log('child on init')
   }
   ngOnDestroy(): void {
     //console.log(`Destroyed: (${this.bound.initialLeft},${this.bound.initialTop})`,++AngularDraggingDirective.destroyCount);
@@ -131,11 +132,11 @@ export class AngularDraggingDirective
     this.element.style.transform =
         "translate3d(" + currentX + "px, " + currentY + "px, 0)";
     this.ngZone.runOutsideAngular(() => {
-      this.currentBounds.emit({x: currentX, y: currentY,width: this.element.offsetWidth,height: this.element.offsetHeight});
-    });
-    // setTimeout(() => {
       
-    // },0)
+    });
+    setTimeout(() => {
+        this.currentBounds.emit({x: currentX, y: currentY,width: this.element.offsetWidth,height: this.element.offsetHeight});
+      },0)
     
   }
 }
