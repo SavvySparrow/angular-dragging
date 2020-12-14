@@ -37,18 +37,15 @@ export class AppComponent
   @ViewChild("boundary", { read: ElementRef, static: true })
   boundaryRef: ElementRef;
 
-  @ViewChild("dragArea", { read: ElementRef, static: true })
-  dragAreaRef: ElementRef;
-
-  dragArea: HTMLElement;
+  dragArea: any;
 
   constructor(private ngZone: NgZone) {}
   ngOnInit(): void {
     console.log("on init");
+    this.dragArea = { offsetWidth: 102, offsetHeight: 102 };
     if (!this.sqaure2DArray) {
       this.initGenerateSquare2dArray();
     }
-    this.dragArea = this.dragAreaRef.nativeElement as HTMLElement;
   }
 
   ngAfterViewChecked(): void {
@@ -68,7 +65,7 @@ export class AppComponent
   initGenerateSquare2dArray() {
     this.sqaure2DArray = [];
     let tempQuad: any;
-    const randomInt = this.getRandomInt(2, 10);
+    const randomInt = this.getRandomInt(2, 2);
     [...Array(randomInt)].forEach((_, i) => {
       tempQuad = this.getXYQuad();
       this.sqaure2DArray.push({
@@ -81,8 +78,12 @@ export class AppComponent
 
   getXYQuad() {
     let found: boolean = false;
-    let maxBoundX = (this.boundaryRef.nativeElement as HTMLElement).offsetWidth - this.dragArea.offsetWidth;
-    let maxBoundY = (this.boundaryRef.nativeElement as HTMLElement).offsetHeight - this.dragArea.offsetHeight;
+    let maxBoundX =
+      (this.boundaryRef.nativeElement as HTMLElement).offsetWidth -
+      this.dragArea.offsetWidth;
+    let maxBoundY =
+      (this.boundaryRef.nativeElement as HTMLElement).offsetHeight -
+      this.dragArea.offsetHeight;
     let cordX: number;
     let cordY: number;
     let i = 0;
@@ -95,29 +96,41 @@ export class AppComponent
           found = true;
         } else {
           let foundTemp = true;
-          console.log(`do verify Quad - (${cordX},${cordY}) and length - ${this.sqaure2DArray.length}`);
+          console.log(
+            `do verify Quad - (${cordX},${cordY}) and length - ${
+              this.sqaure2DArray.length
+            }`
+          );
           this.sqaure2DArray.every((item, index) => {
             //console.log(index,item.initialLeft,item.initialTop,"X",(cordX >= 0 && cordX < item.initialLeft-102),(cordX <= maxBoundX && cordX > item.initialLeft+102),"Y",(cordY >= 0 && cordY < item.initialTop-102),(cordY <= maxBoundY && cordY > item.initialTop+102))
-            if (!(
-              (cordX >= 0 && cordX < item.initialLeft-this.dragArea.offsetWidth) || (cordX <= maxBoundX && cordX > item.initialLeft+this.dragArea.offsetWidth)
-              ||  (cordY >= 0 && cordY < item.initialTop-this.dragArea.offsetHeight) || (cordY <= maxBoundY && cordY > item.initialTop+this.dragArea.offsetHeight)
-              )) {
-              foundTemp=false;
-              console.log('break loop');
+            if (
+              !(
+                (cordX >= 0 &&
+                  cordX < item.initialLeft - this.dragArea.offsetWidth) ||
+                (cordX <= maxBoundX &&
+                  cordX > item.initialLeft + this.dragArea.offsetWidth) ||
+                (cordY >= 0 &&
+                  cordY < item.initialTop - this.dragArea.offsetHeight) ||
+                (cordY <= maxBoundY &&
+                  cordY > item.initialTop + this.dragArea.offsetHeight)
+              )
+            ) {
+              foundTemp = false;
+              console.log("break loop");
               return false;
             }
             return true;
           });
-          if(foundTemp) {
+          if (foundTemp) {
             console.log(`found at - (${cordX},${cordY})`);
-            found=true;
-          } 
+            found = true;
+          }
         }
         i++;
       }
     });
 
-    return {x: cordX,y: cordY,isValid: found};
+    return { x: cordX, y: cordY, isValid: found };
   }
 
   getRandomInt(min, max) {
