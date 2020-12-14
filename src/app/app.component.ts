@@ -65,7 +65,7 @@ export class AppComponent
   initGenerateSquare2dArray() {
     this.sqaure2DArray = [];
     let tempQuad: any;
-    const randomInt = this.getRandomInt(20, 30);
+    const randomInt = this.getRandomInt(2, 30);
     [...Array(randomInt)].forEach((_, i) => {
       tempQuad = this.getXYQuad();
       this.sqaure2DArray.push({
