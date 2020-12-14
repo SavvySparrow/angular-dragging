@@ -65,7 +65,7 @@ export class AppComponent
   initGenerateSquare2dArray() {
     this.sqaure2DArray = [];
     let tempQuad: any;
-    const randomInt = this.getRandomInt(2, 2);
+    const randomInt = this.getRandomInt(20, 30);
     [...Array(randomInt)].forEach((_, i) => {
       tempQuad = this.getXYQuad();
       this.sqaure2DArray.push({
@@ -92,15 +92,15 @@ export class AppComponent
         cordX = this.getRandomInt(0, maxBoundX);
         cordY = this.getRandomInt(0, maxBoundY);
         if (this.sqaure2DArray.length == 0) {
-          console.log(`found at - (${cordX},${cordY})`);
+          //console.log(`found at - (${cordX},${cordY})`);
           found = true;
         } else {
           let foundTemp = true;
-          console.log(
-            `do verify Quad - (${cordX},${cordY}) and length - ${
-              this.sqaure2DArray.length
-            }`
-          );
+          // console.log(
+          //   `do verify Quad - (${cordX},${cordY}) and length - ${
+          //     this.sqaure2DArray.length
+          //   }`
+          // );
           this.sqaure2DArray.every((item, index) => {
             //console.log(index,item.initialLeft,item.initialTop,"X",(cordX >= 0 && cordX < item.initialLeft-102),(cordX <= maxBoundX && cordX > item.initialLeft+102),"Y",(cordY >= 0 && cordY < item.initialTop-102),(cordY <= maxBoundY && cordY > item.initialTop+102))
             if (
@@ -116,13 +116,13 @@ export class AppComponent
               )
             ) {
               foundTemp = false;
-              console.log("break loop");
+              //console.log("break loop");
               return false;
             }
             return true;
           });
           if (foundTemp) {
-            console.log(`found at - (${cordX},${cordY})`);
+            //console.log(`found at - (${cordX},${cordY})`);
             found = true;
           }
         }

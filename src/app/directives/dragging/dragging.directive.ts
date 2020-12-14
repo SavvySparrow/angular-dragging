@@ -139,4 +139,61 @@ export class AngularDraggingDirective
       },0)
     
   }
+
+  // getXYQuad() {
+  //   let found: boolean = false;
+  //   let maxBoundX =
+  //     this.draggingBoundaryElement.offsetWidth -
+  //     this.element.offsetWidth;
+  //   let maxBoundY =
+  //     this.draggingBoundaryElement.offsetHeight -
+  //     this.element.offsetHeight;
+  //   let cordX: number;
+  //   let cordY: number;
+  //   let i = 0;
+  //   this.ngZone.runOutsideAngular(() => {
+  //     while (!found) {
+  //       cordX = this.getRandomInt(0, maxBoundX);
+  //       cordY = this.getRandomInt(0, maxBoundY);
+  //       if (this.sqaure2DArray.length == 0) {
+  //         //console.log(`found at - (${cordX},${cordY})`);
+  //         found = true;
+  //       } else {
+  //         let foundTemp = true;
+  //         // console.log(
+  //         //   `do verify Quad - (${cordX},${cordY}) and length - ${
+  //         //     this.sqaure2DArray.length
+  //         //   }`
+  //         // );
+  //         this.sqaure2DArray.every((item, index) => {
+  //           //console.log(index,item.initialLeft,item.initialTop,"X",(cordX >= 0 && cordX < item.initialLeft-102),(cordX <= maxBoundX && cordX > item.initialLeft+102),"Y",(cordY >= 0 && cordY < item.initialTop-102),(cordY <= maxBoundY && cordY > item.initialTop+102))
+  //           if (
+  //             !(
+  //               (cordX >= 0 &&
+  //                 cordX < item.initialLeft - this.dragArea.offsetWidth) ||
+  //               (cordX <= maxBoundX &&
+  //                 cordX > item.initialLeft + this.dragArea.offsetWidth) ||
+  //               (cordY >= 0 &&
+  //                 cordY < item.initialTop - this.dragArea.offsetHeight) ||
+  //               (cordY <= maxBoundY &&
+  //                 cordY > item.initialTop + this.dragArea.offsetHeight)
+  //             )
+  //           ) {
+  //             foundTemp = false;
+  //             //console.log("break loop");
+  //             return false;
+  //           }
+  //           return true;
+  //         });
+  //         if (foundTemp) {
+  //           //console.log(`found at - (${cordX},${cordY})`);
+  //           found = true;
+  //         }
+  //       }
+  //       i++;
+  //     }
+  //   });
+
+  //   return { x: cordX, y: cordY, isValid: found };
+  // }
 }
