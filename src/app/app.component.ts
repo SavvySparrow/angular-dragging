@@ -41,7 +41,7 @@ export class AppComponent
 
   constructor(private ngZone: NgZone) {}
   ngOnInit(): void {
-    console.log("on init");
+    //console.log("on init");
     this.dragArea = { offsetWidth: 102, offsetHeight: 102 };
     if (!this.sqaure2DArray) {
       this.initGenerateSquare2dArray();
@@ -49,12 +49,12 @@ export class AppComponent
   }
 
   ngAfterViewChecked(): void {
-    console.log("on view checked");
+    //console.log("on view checked");
   }
 
   ngAfterContentInit(): void {}
   ngAfterContentChecked(): void {
-    console.log("on content checked");
+    //console.log("on content checked");
     if (!this.sqaure2DArray) {
       this.initGenerateSquare2dArray();
     }
