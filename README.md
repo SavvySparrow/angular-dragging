@@ -1,3 +1,3 @@
-# angular-ivy-jdvbus
+# angular-dragging
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/angular-ivy-jdvbus)
+[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/angular-dragging)
